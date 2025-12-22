@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "../components/Header";
 import { ConvexClientProvider } from "./ConvexClientProvider";
 import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 
 // import Header from "@/components/Header";
 
@@ -23,7 +24,9 @@ export default function RootLayout({
       <body
         className={`bg-linear-to-br from-gray-950 via-zinc-900 to-stone-900 text-white`}
       >
-        <ClerkProvider>
+        <ClerkProvider appearance={{
+          theme: dark,
+        }}>
           <ConvexClientProvider>
             {/* Header */}
             <Header />
