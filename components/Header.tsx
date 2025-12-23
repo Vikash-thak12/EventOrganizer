@@ -5,8 +5,10 @@ import Link from 'next/link'
 import { Button } from './ui/button'
 import { Authenticated, Unauthenticated } from 'convex/react'
 import { BarLoader } from 'react-spinners'
+import { useStoreUser } from '../hooks/useStoreUser'
 
 const Header = () => {
+    const { isLoading } = useStoreUser();
     return (
         <>
             {/* <nav className='flex sticky items-center justify-between px-10 py-5 w-full bg-background/10 z-10'> */}
@@ -30,9 +32,12 @@ const Header = () => {
                 </div>
 
                 {/* loader */}
-                <div className='absolute bottom-0 left-0 w-full'>
-                    <BarLoader width={"100%"} color='#a855f7' />
-                </div>
+                {
+                    isLoading &&
+                    <div className='absolute bottom-0 left-0 w-full'>
+                        <BarLoader width={"100%"} color='#a855f7' />
+                    </div>
+                }
             </nav>
         </>
     )
