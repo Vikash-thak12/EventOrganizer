@@ -71,7 +71,7 @@ export default defineSchema({
     .index("by_category", ["category"])
     .index("by_start_date", ["startDate"])
     .index("by_slug", ["slug"])
-    .searchIndex("search_title", { searchField: "title"}); 
+    .searchIndex("search_title", { searchField: "title"}),
 
 
 

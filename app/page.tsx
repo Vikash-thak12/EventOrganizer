@@ -48,24 +48,6 @@ const page = () => {
               className="w-full h-auto"
               priority
             />
-            {/* <video
-              width="100%"
-              height="100%"
-              loop
-              playsInline
-              autoPlay
-              muted
-              className="w-full h-auto"
-            >
-              <source
-                src="https://cdn.lu.ma/landing/phone-dark.mp4"
-                type="video/mp4;codecs=hvc1"
-              />
-              <source
-                src="https://cdn.lu.ma/landing/phone-dark.webm"
-                type="video/webm"
-              />
-            </video> */}
           </div>
         </div>
       </section>

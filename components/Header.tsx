@@ -6,12 +6,12 @@ import { Button } from './ui/button'
 import { Authenticated, Unauthenticated } from 'convex/react'
 import { BarLoader } from 'react-spinners'
 import { useStoreUser } from '../hooks/useStoreUser'
-import { Plus } from 'lucide-react'
+import { Building, Plus, Ticket } from 'lucide-react'
 import { useState } from 'react'
 
 const Header = () => {
     const { isLoading } = useStoreUser();
-    const [showModal, setShowModal] = useState(false); 
+    const [showModal, setShowModal] = useState(false);
     return (
         <>
             {/* <nav className='flex sticky items-center justify-between px-10 py-5 w-full bg-background/10 z-10'> */}
@@ -31,7 +31,7 @@ const Header = () => {
                         </Button>
                         <Button className='cursor-pointer' variant='mine' size='sm' asChild>
                             <Link href={"/explore"}>
-                            Explore
+                                Explore
                             </Link>
                         </Button>
                     </div>
@@ -41,7 +41,21 @@ const Header = () => {
                             <Plus />
                             <span className='hidden sm:inline'>Create Event</span>
                         </Button>
-                        <UserButton />
+                        <UserButton>
+                            <UserButton.MenuItems>
+                                <UserButton.Link
+                                    label="My Tickets"
+                                    labelIcon={<Ticket size={16} />}
+                                    href="/my-tickets"
+                                />
+                                <UserButton.Link
+                                    label="My Events"
+                                    labelIcon={<Building size={16} />}
+                                    href="/my-events"
+                                />
+                                <UserButton.Action label="manageAccount" />
+                            </UserButton.MenuItems>
+                        </UserButton>
                     </Authenticated>
                     <Unauthenticated>
                         <SignInButton mode='modal'>
