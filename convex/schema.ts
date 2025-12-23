@@ -6,6 +6,7 @@ export default defineSchema({
         name: v.string(),
         tokenIdentifier: v.string(),
         email: v.string(), 
+        // gender: v.optional(v.string()), 
         imageUrl: v.optional(v.string()), 
         hasCompletedOnboarding: v.boolean(), 
         location: v.optional(
@@ -19,7 +20,7 @@ export default defineSchema({
 
         // for subscription, users can create one free event 
         freeEventsCreated: v.number(), 
-        createAt: v.number(), 
-        updateAt: v.number()
+        createdAt: v.number(), 
+        updatedAt: v.number()
     }).index("by_token", ["tokenIdentifier"]),
 }) 

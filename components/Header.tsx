@@ -6,13 +6,16 @@ import { Button } from './ui/button'
 import { Authenticated, Unauthenticated } from 'convex/react'
 import { BarLoader } from 'react-spinners'
 import { useStoreUser } from '../hooks/useStoreUser'
+import { Plus } from 'lucide-react'
+import { useState } from 'react'
 
 const Header = () => {
     const { isLoading } = useStoreUser();
+    const [showModal, setShowModal] = useState(false); 
     return (
         <>
             {/* <nav className='flex sticky items-center justify-between px-10 py-5 w-full bg-background/10 z-10'> */}
-            <nav className="sticky top-0 z-50 flex items-center justify-between px-10 py-2 w-full bg-background/10">
+            <nav className="sticky top-0 z-50 flex items-center justify-between md:px-10 px-2 py-2 w-full bg-black/90">
                 <div>
                     <Link href={"/"} className='cursor-pointer'>
                         <Image src={"/spott.png"} alt='Logo Image' height={100} width={100} />
@@ -20,13 +23,29 @@ const Header = () => {
                     </Link>
                 </div>
 
-                <div>
+                <div className='flex items-center justify-center gap-2'>
+
+                    <div className='flex items-center justify-center gap-2'>
+                        <Button className='cursor-pointer' variant='mine' size='sm'>
+                            Price
+                        </Button>
+                        <Button className='cursor-pointer' variant='mine' size='sm' asChild>
+                            <Link href={"/explore"}>
+                            Explore
+                            </Link>
+                        </Button>
+                    </div>
+
                     <Authenticated>
+                        <Button className='cursor-pointer' variant='mine' size='sm' onClick={() => setShowModal(true)}>
+                            <Plus />
+                            <span className='hidden sm:inline'>Create Event</span>
+                        </Button>
                         <UserButton />
                     </Authenticated>
                     <Unauthenticated>
                         <SignInButton mode='modal'>
-                            <Button>Sign In</Button>
+                            <Button variant='mine' className='cursor-pointer' size='sm'>Sign In</Button>
                         </SignInButton>
                     </Unauthenticated>
                 </div>
