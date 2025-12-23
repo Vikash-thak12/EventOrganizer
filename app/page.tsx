@@ -31,7 +31,7 @@ const page = () => {
             </p>
 
             <Link href="/explore">
-              <Button size="lg" className={"rounded-full"}>
+              <Button size="lg" variant='mine' className={"rounded-full cursor-pointer"}>
                 Get Started
               </Button>
             </Link>
