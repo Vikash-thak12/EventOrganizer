@@ -25,7 +25,7 @@ const ExplorePage = () => {
   const { data: FeaturedEvents, isLoading: loadingFeatures } = useConvexQuery(api.events.getFeaturedEvents, { limit: 3 });
   // console.log("Datas", FeaturedEvents);
 
-  
+
   // {} is required because Convex queries with args must receive an args object
   // const { data: popularEvents, isLoading: loadingPopular } = useConvexQuery(api.events.getPopularEvents, { limit: 5 });
 
@@ -51,8 +51,20 @@ const ExplorePage = () => {
 
   return (
 
-    <div>
-      This is explore page
+    <>
+
+
+      {/* title section  */}
+      <div className="pb-12 text-center">
+        <h1 className="text-5xl md:text-6xl font-bold mb-4">Discover Events</h1>
+        <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+          Explore featured events, find what&apos;s happening locally, or browse
+          events across India
+        </p>
+      </div>
+
+
+      
       {/* Featured Carousel */}
       {FeaturedEvents && FeaturedEvents.length > 0 && (
         <div>
@@ -128,7 +140,7 @@ const ExplorePage = () => {
       {/* Local Events */}
       {/* Browse by category */}
       {/* popular events across country  */}
-    </div>
+    </>
   )
 }
 
