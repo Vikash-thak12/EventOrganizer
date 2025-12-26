@@ -48,7 +48,7 @@ const ExplorePage = () => {
             className="w-full"
             plugins={[
               Autoplay({
-                delay: 2000,
+                delay: 5000,
               })
             ]}
           >
