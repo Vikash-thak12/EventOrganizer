@@ -1,9 +1,10 @@
 import React from 'react'
 
-const SlugPage = () => {
+const SlugPage = ({slug}) => {
+  console.log("Slug", slug)
   return (
     <div>
-      This is slug page
+      <h1>Slug: {slug}</h1>
     </div>
   )
 }
