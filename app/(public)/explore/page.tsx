@@ -16,18 +16,30 @@ const ExplorePage = () => {
   const router = useRouter();
 
 
+  // getting current user for showing their local events according to their location 
   const { data: currentUser } = useConvexQuery(api.users.getCurrentUser);
-  console.log("User", currentUser)
-  const { data: FeaturedEvents, isLoading: loadingFeatures } = useConvexQuery(api.events.getFeaturedEvents, { limit: 3 });
-  console.log("Datas", FeaturedEvents);
+  // console.log("User", currentUser)
 
+
+  // here i'm calling Featured events which is being shown in carousel 
+  const { data: FeaturedEvents, isLoading: loadingFeatures } = useConvexQuery(api.events.getFeaturedEvents, { limit: 3 });
+  // console.log("Datas", FeaturedEvents);
+
+  
   // {} is required because Convex queries with args must receive an args object
   // const { data: popularEvents, isLoading: loadingPopular } = useConvexQuery(api.events.getPopularEvents, { limit: 5 });
+
+
+
   // const { data: EventsbyLocation, isLoading: loadingLocalEvents } = useConvexQuery(api.events.getEventsByLocation, {
   //   city: currentUser?.location?.city || "Bengaluru",
   //   state: currentUser?.location?.state || "Karnataka",
   //   limit: 5
   // })
+
+
+
+
   // const { data: categoryCounts } = useConvexQuery(api.events.getCategoryCounts)
 
 
