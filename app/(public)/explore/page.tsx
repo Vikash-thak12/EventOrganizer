@@ -1,5 +1,5 @@
 "use client"
-import { Calendar, MapPin, Users } from 'lucide-react';
+import { ArrowRight, Calendar, MapPin, Users } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '../../../@/components/ui/carousel';
 // import { useQuery } from 'convex/react'
 // import React from 'react'
@@ -10,6 +10,9 @@ import { Badge } from '../../../@/components/ui/badge';
 import Autoplay from "embla-carousel-autoplay"
 import { useRouter } from 'next/navigation';
 import { format } from "date-fns";
+import { Button } from '../../../components/ui/button';
+import { createLocationSlug } from '../../../lib/location-utils';
+import Loader from '../../../components/Loader';
 
 
 const ExplorePage = () => {
@@ -18,7 +21,7 @@ const ExplorePage = () => {
 
   // getting current user for showing their local events according to their location 
   const { data: currentUser } = useConvexQuery(api.users.getCurrentUser);
-  // console.log("User", currentUser)
+  console.log("User", currentUser)
 
 
   // here i'm calling Featured events which is being shown in carousel 
@@ -26,16 +29,21 @@ const ExplorePage = () => {
   // console.log("Datas", FeaturedEvents);
 
 
+
+
+  const { data: EventsbyLocation, isLoading: loadingLocalEvents } = useConvexQuery(api.events.getEventsByLocation, {
+    city: currentUser?.location?.city || "haryana",
+    state: currentUser?.location?.state || "gurugram",
+    limit: 5
+  })
+
+  console.log("Location", EventsbyLocation); 
+
+
   // {} is required because Convex queries with args must receive an args object
-  // const { data: popularEvents, isLoading: loadingPopular } = useConvexQuery(api.events.getPopularEvents, { limit: 5 });
+  const { data: popularEvents, isLoading: loadingPopular } = useConvexQuery(api.events.getPopularEvents, { limit: 5 });
 
 
-
-  // const { data: EventsbyLocation, isLoading: loadingLocalEvents } = useConvexQuery(api.events.getEventsByLocation, {
-  //   city: currentUser?.location?.city || "Bengaluru",
-  //   state: currentUser?.location?.state || "Karnataka",
-  //   limit: 5
-  // })
 
 
 
@@ -49,13 +57,30 @@ const ExplorePage = () => {
     router.push(`/explore/${slug}`);
   }
 
+
+  const handleviewlocalEvents = () => {
+    const city = currentUser?.location?.city; 
+    const state = currentUser?.location?.state; 
+
+    const slug = createLocationSlug(city, state); 
+    router.push(`/explore/${slug}`); 
+
+  }
+
+
+
+  const isloading = loadingFeatures || loadingLocalEvents || loadingPopular; 
+  if(isloading){
+    return <Loader />
+  }
+
   return (
 
-    <>
+    <main className='mt-12'>
 
 
       {/* title section  */}
-      <div className="pb-12 text-center">
+      <div className="text-center">
         <h1 className="text-5xl md:text-6xl font-bold mb-4">Discover Events</h1>
         <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
           Explore featured events, find what&apos;s happening locally, or browse
@@ -64,10 +89,10 @@ const ExplorePage = () => {
       </div>
 
 
-      
+
       {/* Featured Carousel */}
       {FeaturedEvents && FeaturedEvents.length > 0 && (
-        <div>
+        <div className='mt-4'>
           <Carousel
             className="w-full"
             plugins={[
@@ -137,10 +162,35 @@ const ExplorePage = () => {
           </Carousel>
         </div>
       )}
+
+
+
       {/* Local Events */}
+      {
+        EventsbyLocation && EventsbyLocation.length > 0 && (
+          <div className='mt-12'>
+            <div className='flex items-center justify-between'>
+              <div>
+                <h2>Events near you</h2>
+                <span>
+                  Happening in {currentUser?.location?.city || "in your area"}.
+                </span>
+              </div>
+
+              <Button
+              variant='mine'
+              className='cursor-pointer'
+              onClick={handleviewlocalEvents}
+              >
+                Explore More <ArrowRight />
+              </Button>
+            </div>
+          </div>
+        )
+      }
       {/* Browse by category */}
       {/* popular events across country  */}
-    </>
+    </main>
   )
 }
 
