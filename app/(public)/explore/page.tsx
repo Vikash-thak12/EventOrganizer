@@ -14,6 +14,8 @@ import { Button } from '../../../components/ui/button';
 import { createLocationSlug } from '../../../lib/location-utils';
 import Loader from '../../../components/Loader';
 import EventCard from '../../../components/event-card';
+import { CATEGORIES } from '../../../lib/data';
+import { Card, CardContent } from '../../../@/components/ui/card';
 
 
 const ExplorePage = () => {
@@ -22,7 +24,7 @@ const ExplorePage = () => {
 
   // getting current user for showing their local events according to their location 
   const { data: currentUser } = useConvexQuery(api.users.getCurrentUser);
-  console.log("User", currentUser)
+  // console.log("User", currentUser)
 
 
   // here i'm calling Featured events which is being shown in carousel 
@@ -38,7 +40,7 @@ const ExplorePage = () => {
     limit: 4
   })
 
-  console.log("Location", EventsbyLocation);
+  // console.log("Location", EventsbyLocation);
 
 
   // {} is required because Convex queries with args must receive an args object
@@ -49,7 +51,18 @@ const ExplorePage = () => {
 
 
 
-  // const { data: categoryCounts } = useConvexQuery(api.events.getCategoryCounts)
+  const { data: categoryCounts } = useConvexQuery(api.events.getCategoryCounts)
+  console.log("Category", categoryCounts)
+
+
+  const countCategories = CATEGORIES.map((cat) => {
+    return {
+      ...cat,
+      count: categoryCounts?.[cat.id] || 0
+    }
+  })
+
+  console.log("Categories", countCategories)
 
 
 
@@ -70,7 +83,7 @@ const ExplorePage = () => {
 
 
   const handleDelete = () => {
-    
+
   }
 
 
@@ -207,7 +220,35 @@ const ExplorePage = () => {
           </div>
         )
       }
+
+
+
       {/* Browse by category */}
+      <div className="mt-16">
+        <h2 className="text-3xl font-bold mb-6">Browse by Category</h2>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
+          {countCategories.map((category) => (
+            <Card
+              key={category.id}
+              className="py-2 group bg-default text-white cursor-pointer hover:shadow-lg transition-all hover:border-purple-500/50"
+              // onClick={() => handleCategoryClick(category.id)}
+            >
+              <CardContent className="px-3 sm:p-6 flex items-center gap-3">
+                <div className="text-3xl sm:text-4xl">{category.icon}</div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold mb-1 group-hover:text-purple-400 transition-colors">
+                    {category.label}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {category.count} Event{category.count !== 1 ? "s" : ""}
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
       {/* popular events across country  */}
     </main>
   )
