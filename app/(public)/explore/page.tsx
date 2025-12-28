@@ -277,6 +277,29 @@ const ExplorePage = () => {
           </div>
         </div>
       )}
+
+
+
+      {/* Empty State */}
+      {!loadingFeatures &&
+        !loadingLocalEvents &&
+        !loadingPopular &&
+        (!FeaturedEvents || FeaturedEvents.length === 0) &&
+        (!EventsbyLocation || EventsbyLocation.length === 0) &&
+        (!popularEvents || popularEvents.length === 0) && (
+          <Card className="p-12 text-center">
+            <div className="max-w-md mx-auto space-y-4">
+              <div className="text-6xl mb-4">🎉</div>
+              <h2 className="text-2xl font-bold">No events yet</h2>
+              <p className="text-muted-foreground">
+                Be the first to create an event in your area!
+              </p>
+              <Button asChild className="gap-2">
+                <a href="/create-event">Create Event</a>
+              </Button>
+            </div>
+          </Card>
+        )}
     </main>
   )
 }
