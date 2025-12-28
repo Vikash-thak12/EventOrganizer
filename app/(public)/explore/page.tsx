@@ -52,9 +52,7 @@ const ExplorePage = () => {
 
 
   const { data: categoryCounts } = useConvexQuery(api.events.getCategoryCounts)
-  console.log("Category", categoryCounts)
-
-
+  console.log("category", categoryCounts)
   const countCategories = CATEGORIES.map((cat) => {
     return {
       ...cat,
@@ -68,7 +66,7 @@ const ExplorePage = () => {
 
   // functions for the below code 
   const handleEventClick = (slug) => {
-    router.push(`/explore/${slug}`);
+    router.push(`/events/${slug}`);
   }
 
 
@@ -77,13 +75,19 @@ const ExplorePage = () => {
     const state = currentUser?.location?.state;
 
     const slug = createLocationSlug(city, state);
-    router.push(`/explore/${slug}`);
+    router.push(`/events/${slug}`);
 
   }
 
 
   const handleDelete = () => {
 
+  }
+
+
+
+  const handleCategoryClick = (category) => {
+    router.push(`/events/${category}`);
   }
 
 
@@ -232,7 +236,7 @@ const ExplorePage = () => {
             <Card
               key={category.id}
               className="py-2 group bg-default text-white cursor-pointer hover:shadow-lg transition-all hover:border-purple-500/50"
-              // onClick={() => handleCategoryClick(category.id)}
+              onClick={() => handleCategoryClick(category.id)}
             >
               <CardContent className="px-3 sm:p-6 flex items-center gap-3">
                 <div className="text-3xl sm:text-4xl">{category.icon}</div>
@@ -249,7 +253,30 @@ const ExplorePage = () => {
           ))}
         </div>
       </div>
+
+
+
       {/* popular events across country  */}
+      {popularEvents && popularEvents.length > 0 && (
+        <div className="mt-16">
+          <div className="mb-6">
+            <h2 className="text-3xl font-bold mb-1">Popular Across India</h2>
+            <p className="text-muted-foreground">Trending events nationwide</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {popularEvents.map((event) => (
+              <EventCard
+                key={event._id}
+                event={event}
+                variant="list"
+                onClick={() => handleEventClick(event.slug)}
+                className='bg-default text-white'
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </main>
   )
 }

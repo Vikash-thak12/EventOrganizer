@@ -8,6 +8,21 @@ import { getCategoryIcon, getCategoryLabel } from "../lib/data";
 import { Badge } from "../@/components/ui/badge";
 import { Button } from "./ui/button";
 
+interface Event {
+  _id: string;
+  title: string;
+  coverImage?: string;
+  themeColor: string;
+  category: string;
+  startDate: Date;
+  locationType: "online" | "in-person";
+  city?: string;
+  state?: string;
+  country?: string;
+  registrationCount: number;
+  capacity: number;
+  ticketType: "free" | "paid";
+}
 
 export default function EventCard({
   event,
@@ -16,6 +31,13 @@ export default function EventCard({
   variant = "grid", // "grid" or "list"
   action = null, // "event" | "ticket" | null
   className = "",
+}: {
+  event: Event;
+  onClick?: (e: React.MouseEvent) => void;
+  onDelete?: (id: string) => void;
+  variant?: "grid" | "list";
+  action?: "event" | "ticket" | null;
+  className?: string;
 }) {
   // List variant (compact horizontal layout)
   if (variant === "list") {
