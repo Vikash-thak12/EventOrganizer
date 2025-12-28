@@ -13,6 +13,7 @@ import { format } from "date-fns";
 import { Button } from '../../../components/ui/button';
 import { createLocationSlug } from '../../../lib/location-utils';
 import Loader from '../../../components/Loader';
+import EventCard from '../../../components/event-card';
 
 
 const ExplorePage = () => {
@@ -34,10 +35,10 @@ const ExplorePage = () => {
   const { data: EventsbyLocation, isLoading: loadingLocalEvents } = useConvexQuery(api.events.getEventsByLocation, {
     city: currentUser?.location?.city || "haryana",
     state: currentUser?.location?.state || "gurugram",
-    limit: 5
+    limit: 4
   })
 
-  console.log("Location", EventsbyLocation); 
+  console.log("Location", EventsbyLocation);
 
 
   // {} is required because Convex queries with args must receive an args object
@@ -59,18 +60,18 @@ const ExplorePage = () => {
 
 
   const handleviewlocalEvents = () => {
-    const city = currentUser?.location?.city; 
-    const state = currentUser?.location?.state; 
+    const city = currentUser?.location?.city;
+    const state = currentUser?.location?.state;
 
-    const slug = createLocationSlug(city, state); 
-    router.push(`/explore/${slug}`); 
+    const slug = createLocationSlug(city, state);
+    router.push(`/explore/${slug}`);
 
   }
 
 
 
-  const isloading = loadingFeatures || loadingLocalEvents || loadingPopular; 
-  if(isloading){
+  const isloading = loadingFeatures || loadingLocalEvents || loadingPopular;
+  if (isloading) {
     return <Loader />
   }
 
@@ -173,17 +174,29 @@ const ExplorePage = () => {
               <div>
                 <h2>Events near you</h2>
                 <span>
-                  Happening in {currentUser?.location?.city || "in your area"}.
+                  Happening in {currentUser?.location?.city.toUpperCase() || "your area"} !
                 </span>
               </div>
 
               <Button
-              variant='mine'
-              className='cursor-pointer'
-              onClick={handleviewlocalEvents}
+                variant='mine'
+                className='cursor-pointer'
+                onClick={handleviewlocalEvents}
               >
                 Explore More <ArrowRight />
               </Button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-5">
+              {EventsbyLocation.map((event) => (
+                <EventCard
+                  key={event._id}
+                  event={event}
+                  variant="grid"
+                  onClick={() => handleEventClick(event.slug)}
+                  className='bg-default text-white'
+                />
+              ))}
             </div>
           </div>
         )
