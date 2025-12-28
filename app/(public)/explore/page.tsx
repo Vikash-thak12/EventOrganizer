@@ -69,6 +69,11 @@ const ExplorePage = () => {
   }
 
 
+  const handleDelete = () => {
+    
+  }
+
+
 
   const isloading = loadingFeatures || loadingLocalEvents || loadingPopular;
   if (isloading) {
@@ -194,6 +199,7 @@ const ExplorePage = () => {
                   event={event}
                   variant="grid"
                   onClick={() => handleEventClick(event.slug)}
+                  onDelete={handleDelete}
                   className='bg-default text-white'
                 />
               ))}
