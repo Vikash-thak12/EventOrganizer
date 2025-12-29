@@ -1,5 +1,5 @@
 "use client"
-import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
+import { SignInButton,  UserButton } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from './ui/button'
@@ -8,6 +8,7 @@ import { BarLoader } from 'react-spinners'
 import { useStoreUser } from '../hooks/useStoreUser'
 import { Building, Plus, Ticket } from 'lucide-react'
 import { useState } from 'react'
+import OnBoardingModal from './onBoarding-modal'
 
 const Header = () => {
     const { isLoading } = useStoreUser();
@@ -71,7 +72,14 @@ const Header = () => {
                         <BarLoader width={"100%"} color='#a855f7' />
                     </div>
                 }
+
+
+                {/* modal */}
+                <OnBoardingModal />
             </nav>
+
+
+
         </>
     )
 }
