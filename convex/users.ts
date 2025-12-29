@@ -1,3 +1,5 @@
+import { api} from "./_generated/api";
+import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 
 export const store = mutation({
@@ -57,7 +59,6 @@ export const store = mutation({
 });
 
 
-
 export const getCurrentUser = query({
     handler: async (ctx) => {
         const identity = await ctx.auth.getUserIdentity(); 
@@ -76,3 +77,31 @@ export const getCurrentUser = query({
         return user; 
     }
 })
+
+// will be used when onboarding the user
+export const onCompleteBoarding = mutation({
+  args: {
+    location: v.object({
+      city: v.string(),
+      state: v.optional(v.string()),
+      country: v.string(),
+    }),
+    interests: v.array(v.string())
+  },
+  handler: async (ctx, args) => {
+    const user = await ctx.runQuery(api.users.getCurrentUser, {});
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    await ctx.db.patch(user._id, {
+      hasCompletedOnboarding: true,
+      location: args.location,
+      interests: args.interests,
+      updatedAt: Date.now()
+    });
+
+    return user._id;
+  }
+});
