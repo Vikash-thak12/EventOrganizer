@@ -52,7 +52,7 @@ const ExplorePage = () => {
 
 
   const { data: categoryCounts } = useConvexQuery(api.events.getCategoryCounts)
-  console.log("category", categoryCounts)
+  // console.log("category", categoryCounts)
   const countCategories = CATEGORIES.map((cat) => {
     return {
       ...cat,
@@ -60,7 +60,7 @@ const ExplorePage = () => {
     }
   })
 
-  console.log("Categories", countCategories)
+  // console.log("Categories", countCategories)
 
 
 
@@ -75,7 +75,7 @@ const ExplorePage = () => {
     const state = currentUser?.location?.state;
 
     const slug = createLocationSlug(city, state);
-    router.push(`/events/${slug}`);
+    router.push(`/explore/${slug}`);
 
   }
 
@@ -87,7 +87,7 @@ const ExplorePage = () => {
 
 
   const handleCategoryClick = (category) => {
-    router.push(`/events/${category}`);
+    router.push(`/explore/${category}`);
   }
 
 
@@ -99,7 +99,7 @@ const ExplorePage = () => {
 
   return (
 
-    <main className='mt-12'>
+    <main className=''>
 
 
       {/* title section  */}
@@ -228,31 +228,34 @@ const ExplorePage = () => {
 
 
       {/* Browse by category */}
-      <div className="mt-16">
-        <h2 className="text-3xl font-bold mb-6">Browse by Category</h2>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
-          {countCategories.map((category) => (
-            <Card
-              key={category.id}
-              className="py-2 group bg-default text-white cursor-pointer hover:shadow-lg transition-all hover:border-purple-500/50"
-              onClick={() => handleCategoryClick(category.id)}
-            >
-              <CardContent className="px-3 sm:p-6 flex items-center gap-3">
-                <div className="text-3xl sm:text-4xl">{category.icon}</div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold mb-1 group-hover:text-purple-400 transition-colors">
-                    {category.label}
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    {category.count} Event{category.count !== 1 ? "s" : ""}
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
+      {
+        (FeaturedEvents.length > 0 || popularEvents.length > 0 || EventsbyLocation.length > 0) && <>
+          <div className="mt-16">
+            <h2 className="text-3xl font-bold mb-6">Browse by Category</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
+              {countCategories.map((category) => (
+                <Card
+                  key={category.id}
+                  className="py-2 group bg-default text-white cursor-pointer hover:shadow-lg transition-all hover:border-purple-500/50"
+                  onClick={() => handleCategoryClick(category.id)}
+                >
+                  <CardContent className="px-3 sm:p-6 flex items-center gap-3">
+                    <div className="text-3xl sm:text-4xl">{category.icon}</div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold mb-1 group-hover:text-purple-400 transition-colors">
+                        {category.label}
+                      </h3>
+                      <p className="text-sm text-muted-foreground">
+                        {category.count} Event{category.count !== 1 ? "s" : ""}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </>
+      }
 
 
 
@@ -287,14 +290,14 @@ const ExplorePage = () => {
         (!FeaturedEvents || FeaturedEvents.length === 0) &&
         (!EventsbyLocation || EventsbyLocation.length === 0) &&
         (!popularEvents || popularEvents.length === 0) && (
-          <Card className="p-12 text-center">
+          <Card className="p-12 text-center bg-default text-white mt-8">
             <div className="max-w-md mx-auto space-y-4">
               <div className="text-6xl mb-4">🎉</div>
               <h2 className="text-2xl font-bold">No events yet</h2>
               <p className="text-muted-foreground">
                 Be the first to create an event in your area!
               </p>
-              <Button asChild className="gap-2">
+              <Button asChild className="gap-2" variant='mine'>
                 <a href="/create-event">Create Event</a>
               </Button>
             </div>

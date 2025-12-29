@@ -15,7 +15,7 @@ const Header = () => {
     return (
         <>
             {/* <nav className='flex sticky items-center justify-between px-10 py-5 w-full bg-background/10 z-10'> */}
-            <nav className="sticky top-0 z-50 flex items-center justify-between md:px-10 px-2 py-2 w-full bg-black/90">
+            <nav className="sticky top-0 z-50 min-h-20 flex items-center justify-between md:px-10 px-2 py-2 w-full bg-black/90">
                 <div>
                     <Link href={"/"} className='cursor-pointer'>
                         <Image src={"/spott.png"} alt='Logo Image' height={100} width={100} />
