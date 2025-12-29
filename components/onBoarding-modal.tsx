@@ -1,23 +1,20 @@
 "use client"
 
 
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../@/components/ui/dialog'
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../@/components/ui/dialog'
 import { Button } from '../@/components/ui/button'
 import { useState } from 'react'
 import { Progress } from '../@/components/ui/progress'
 import { Heart,  MapPin } from 'lucide-react'
 
-const OnBoardingModal = () => {
+const OnBoardingModal = ({ isOpen, onClose, onComplete}) => {
+// const OnBoardingModal = () => {
     const [step, setStep] = useState(1);
 
     const progress = (step / 2) * 100;
     return (
         <div>
-            <Dialog>
-                <form>
-                    <DialogTrigger asChild>
-                        <Button variant="outline">Open Dialog</Button>
-                    </DialogTrigger>
+            <Dialog open={isOpen} onOpenChange={onClose}>
                     <DialogContent className="sm:max-w-[425px] bg-neutral-900 text-gray-200 border border-purple-500/40 rounded-xl shadow-2xl">
                         <DialogHeader className='pt-4'>
                             <Progress value={progress} />
@@ -52,7 +49,6 @@ const OnBoardingModal = () => {
                             <Button type="submit">Save changes</Button>
                         </DialogFooter>
                     </DialogContent>
-                </form>
             </Dialog>
         </div>
     )

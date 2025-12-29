@@ -1,5 +1,5 @@
 "use client"
-import { SignInButton,  UserButton } from '@clerk/nextjs'
+import { SignInButton, UserButton } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from './ui/button'
@@ -9,10 +9,13 @@ import { useStoreUser } from '../hooks/useStoreUser'
 import { Building, Plus, Ticket } from 'lucide-react'
 import { useState } from 'react'
 import OnBoardingModal from './onBoarding-modal'
+import { useBoarding } from '../hooks/use-onboarding'
 
 const Header = () => {
     const { isLoading } = useStoreUser();
     const [showModal, setShowModal] = useState(false);
+
+    const { showOnboarding, handleOnboardingComplete, handleOnboardingSkip } = useBoarding();
     return (
         <>
             {/* <nav className='flex sticky items-center justify-between px-10 py-5 w-full bg-background/10 z-10'> */}
@@ -73,10 +76,16 @@ const Header = () => {
                     </div>
                 }
 
+                {/* <OnBoardingModal /> */}
 
                 {/* modal */}
-                <OnBoardingModal />
             </nav>
+            <OnBoardingModal
+                isOpen={showOnboarding}
+                onClose={handleOnboardingSkip}
+                onComplete={handleOnboardingComplete}
+            />
+
 
 
 

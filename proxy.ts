@@ -5,7 +5,6 @@ const isProtectedRoute = createRouteMatcher([
     "/my-events(.*)", 
     "/create-event(.*)",
     "/my-tickets(.*)",
-    "/explore(.*)",
 ])
 
 
