@@ -1,9 +1,11 @@
+"use client"
+
+
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../@/components/ui/dialog'
 import { Button } from '../@/components/ui/button'
-import { Input } from '../@/components/ui/input'
-import { Label } from '../@/components/ui/label'
 import { useState } from 'react'
 import { Progress } from '../@/components/ui/progress'
+import { Heart,  MapPin } from 'lucide-react'
 
 const OnBoardingModal = () => {
     const [step, setStep] = useState(1);
@@ -17,14 +19,27 @@ const OnBoardingModal = () => {
                         <Button variant="outline">Open Dialog</Button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[425px] bg-neutral-900 text-gray-200 border border-purple-500/40 rounded-xl shadow-2xl">
-                        <DialogHeader>
-                            <DialogTitle>Edit profile</DialogTitle>
-                            <Progress
-                                value={progress}
-                            />
+                        <DialogHeader className='pt-4'>
+                            <Progress value={progress} />
+                            <DialogTitle className={"flex items-center gap-2 text-xl"}>
+                                {
+                                    step == 1 ? (
+                                        <>
+                                            <Heart className='h-6 w-5 text-purple-500' />
+                                            What interests you ?
+                                        </>
+                                    ) : (
+                                        <>
+                                            <MapPin className='h-6 w-5 text-purple-500' />
+                                            Where are you Located ?
+                                        </>
+                                    )
+                                }
+                            </DialogTitle>
                             <DialogDescription>
-                                Make changes to your profile here. Click save when you&apos;re
-                                done.
+                                {
+                                    step === 1 ? "Select at least 3 categories to personalize your experience." : "We will show you events happening near you."
+                                }
                             </DialogDescription>
                         </DialogHeader>
                         <div>
